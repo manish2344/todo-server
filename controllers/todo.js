@@ -1,17 +1,28 @@
 const Todo = require("../models/todo");
 
-exports.getAllTodo = (req, res) => {
-    Todo.find()
-        .then((todo) => {
-            console.log({ todo });
-            res.json(todo);
-        })
-        .catch((err) =>
-            res
-                .status(404)
-                .json({ message: "no todo found", error: err.message })
-        );
-};
+// exports.getAllTodo = (req, res) => {
+//     Todo.find()
+//         .then((todo) => {
+//             console.log({ todo });
+//             res.json(todo);
+//         })
+//         .catch((err) =>
+//             res
+//                 .status(404)
+//                 .json({ message: "no todo found", error: err.message })
+//         );
+// };
+
+exports.getAllTodo = async(req, res) => {
+    try {
+        const todo = await  Todo.find();
+        res.send(todo);
+
+    } catch (e) {
+        res.send(e)
+    }
+
+}
 
 exports.postCreateTodo = (req, res) => {
     Todo.create(req.body)
